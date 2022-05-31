@@ -17,7 +17,7 @@ def getNombreFichero(url_propiedad, ini, fin, conTitle):
     if conTitle:
       nombre_fichero="ficheros_salida/canibalizaciones_"+dominio+"_"+ini+"_"+fin+".csv"
     else:
-      nombre_fichero="ficheros_salida/canibalizaciones_sin_title_"+dominio+"_"+ini+"_"+fin+".csv"
+      nombre_fichero="ficheros_salida/canibalizaciones_"+dominio+"_"+ini+"_"+fin+"_sin_title.csv"
     return nombre_fichero
 
 def get_title(url):
