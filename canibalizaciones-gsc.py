@@ -57,9 +57,12 @@ if len(sys.argv) >= 5:
     propiedad=sys.argv[2]
     inicio=sys.argv[3]
     fin=sys.argv[4]
-    branded_queries=sys.argv[5]
-    if len(sys.argv)==7:
-        fil=sys.argv[6]
+    '''posición a partir de la cuál filtraremos los resultados. Las URL que aparezcan en posición inferior 
+    a la indicada no se mostrarán. ya que no consideramos que sufran canibalización'''
+    SERP_results = int(sys.argv[5])
+    branded_queries=sys.argv[6]
+    if len(sys.argv)==8:
+        fil=sys.argv[7]
         aux=fil.split(",")
         filtro={'parametro':aux[0], 'operador':aux[1], 'valor':aux[2]}
 
@@ -90,7 +93,7 @@ df['impressions'] = df['impressions'].astype('int')
 df['position'] = df['position'].round(2)
 df.sort_values('clicks',inplace=True,ascending=False)
 
-SERP_results = 1 #insert here your prefered value for SERP results
+SERP_results = 6 #insert here your prefered value for SERP results
 
 #mantenemos los elementos que están en la posición superior a la definida 
 df_canibalized = df[df['position'] > SERP_results] 
