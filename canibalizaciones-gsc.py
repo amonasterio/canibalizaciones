@@ -91,10 +91,14 @@ df['position'] = df['position'].round(2)
 df.sort_values('clicks',inplace=True,ascending=False)
 
 SERP_results = 1 #insert here your prefered value for SERP results
- 
+
+#mantenemos los elementos que están en la posición superior a la definida 
 df_canibalized = df[df['position'] > SERP_results] 
+#eliminamos resultados que tienen en la URL # (son repetidos)
+df_canibalized=df_canibalized[~df_canibalized['page'].str.contains('#',regex=True)]
+#eliminamos resultados que tienen consultas de marca
 df_canibalized = df_canibalized[~df_canibalized['query'].str.contains(branded_queries, regex=True)]
-#df_canibalized =df[~df['query'].str.contains(branded_queries, regex=True)]
+#eliminamos queries únicas
 df_canibalized = df_canibalized[df_canibalized.duplicated(subset=['query'], keep=False)]
 df_canibalized.set_index(['query'],inplace=True)
 df_canibalized.sort_index(inplace=True)
