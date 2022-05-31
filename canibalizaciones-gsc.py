@@ -103,6 +103,8 @@ df_canibalized = df_canibalized[df_canibalized.duplicated(subset=['query'], keep
 df_canibalized.set_index(['query'],inplace=True)
 df_canibalized.sort_index(inplace=True)
 df_canibalized.reset_index(inplace=True)
+
+#generamos el csv sin recuperar el campo title
 df_canibalized.to_csv(getNombreFichero(propiedad, inicio, fin,False), index=False)
 
 #Seleccionamos URL únicas para obtener el title
@@ -121,4 +123,3 @@ inner_join.reset_index(inplace=True)
 # Export to *.csv
 inner_join.to_csv(getNombreFichero(propiedad, inicio, fin,True), index=False)
 
-#df_canibalized.to_csv('canibalizaciones.csv', index=False)
