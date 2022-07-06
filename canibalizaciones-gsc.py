@@ -21,11 +21,12 @@ def getNombreFichero(url_propiedad, ini, fin, conTitle):
     return nombre_fichero
 
 def get_title(url):
-    data_headers ={"User-Agent":"Mozilla/5.0"}
-    page = requests.get(url,headers=data_headers)
-    soup = BeautifulSoup(page.content,'html.parser')
+    data_headers ={"User-Agent":"Mozilla/5.0"} 
     try:
-      title = soup.find('title').get_text()
+      page = requests.get(url,headers=data_headers)
+      if "text/html" in page.headers["content-type"]:    
+        soup = BeautifulSoup(page.text, "html.parser")
+        title = soup.find('title').get_text().strip()
     except IndexError:
       title=''
     except Exception as e:
@@ -124,5 +125,5 @@ inner_join.sort_index(inplace=True)
 inner_join.reset_index(inplace=True)
 
 # Export to *.csv
-inner_join.to_csv(getNombreFichero(propiedad, inicio, fin,True), index=False)
+inner_join.to_csv(getNombreFichero(propiedad, inicio, fin,True), index=False,decimal=',')
 
