@@ -27,7 +27,11 @@ def get_title(url):
       if "text/html" in page.headers["content-type"]:    
         soup = BeautifulSoup(page.text, "html.parser")
         title = soup.find('title').get_text().strip()
+      else: 
+        title=''
     except IndexError:
+      title=''
+    except UnboundLocalError as e:
       title=''
     except Exception as e:
       title=''
@@ -94,7 +98,7 @@ df['impressions'] = df['impressions'].astype('int')
 df['position'] = df['position'].round(2)
 df.sort_values('clicks',inplace=True,ascending=False)
 
-SERP_results = 6 #insert here your prefered value for SERP results
+#SERP_results = 0 #insert here your prefered value for SERP results
 
 #mantenemos los elementos que están en la posición superior a la definida 
 df_canibalized = df[df['position'] > SERP_results] 
@@ -109,7 +113,7 @@ df_canibalized.sort_index(inplace=True)
 df_canibalized.reset_index(inplace=True)
 
 #generamos el csv sin recuperar el campo title
-df_canibalized.to_csv(getNombreFichero(propiedad, inicio, fin,False), index=False)
+df_canibalized.to_csv(getNombreFichero(propiedad, inicio, fin,False), index=False,decimal=',')
 
 #Seleccionamos URL únicas para obtener el title
 columns = ['page']
